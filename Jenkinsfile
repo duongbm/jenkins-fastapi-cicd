@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        dockerfile true
-    }
+    agent any
 
     environment {
         registry = 'duongbm/fastapi-test'
