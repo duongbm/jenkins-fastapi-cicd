@@ -24,7 +24,7 @@ pipeline {
         stage ('Push') {
             steps {
                 script {
-                    docker.withRegistry('https://gcr.io', registryCredential) {
+                    docker.withRegistry('https://asia.gcr.io', registryCredential) {
                         app.push()
                     }
                 }
