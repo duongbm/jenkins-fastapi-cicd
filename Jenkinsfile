@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        registry = 'duongbm/jenkins-fastapi'
-        registryCredential = 'dockerhub'
+        registry = 'gcr.io/jenkins-fastapi'
+        registryCredential = credentials('ce-gcr')
     }
 
     stages {
