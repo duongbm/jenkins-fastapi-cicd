@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         registry = 'gcr.io/jenkins-fastapi'
-        registryCredential = credentials('ce-gcr')
+        registryCredential = 'ce-gcr'
     }
 
     stages {
