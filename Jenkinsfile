@@ -16,22 +16,24 @@ pipeline {
         }
 
         stage ('Build') {
-            
-            steps {
-                script {
-                    app = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
+           steps {
+               sh 'python3 --version'
+           } 
+            // steps {
+            //     script {
+            //         app = docker.build registry + ":$BUILD_NUMBER"
+            //     }
+            // }
         }
 
-        stage ('Push') {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        app.push()
-                    }
-                }
-            }
-        }
+        // stage ('Push') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('', registryCredential) {
+        //                 app.push()
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
