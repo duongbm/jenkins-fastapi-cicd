@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         registry = 'gcr.io/jenkins-fastapi'
-        registryCredential = 'ce-gcr'
+        registryCredential = 'gcr:ce-gcr'
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
         stage ('Push') {
             steps {
                 script {
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://gcr.io', registryCredential) {
                         app.push()
                     }
                 }
