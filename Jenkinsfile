@@ -14,17 +14,11 @@ pipeline {
         }
 
         stage ('Build') {
-           steps {
-               sh 'python3 --version'
-           } 
-            // steps {
-            //     container('docker') {
-            //         sh "docker build -t fastapi-test:$BUILD_NUMBER"
-            //     }
-                // script {
-                //     app = docker.build registry + ":$BUILD_NUMBER"
-                // }
-            // }
+            steps {
+                script {
+                    app = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
         }
 
         // stage ('Push') {
