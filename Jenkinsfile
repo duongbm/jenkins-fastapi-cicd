@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = 'gcr.io/jenkins-fastapi'
+        registry = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
     }
 
