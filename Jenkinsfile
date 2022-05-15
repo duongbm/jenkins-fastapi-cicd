@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile true
+    }
 
     environment {
         registry = 'duongbm/fastapi-test'
@@ -14,6 +16,7 @@ pipeline {
         }
 
         stage ('Build') {
+            
             steps {
                 script {
                     app = docker.build registry + ":$BUILD_NUMBER"
