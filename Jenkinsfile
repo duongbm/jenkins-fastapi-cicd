@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = 'duongbm/fastapi-test'
+        registry = 'duongbm/jenkins-fastapi'
         registryCredential = 'dockerhub'
     }
 
@@ -21,14 +21,14 @@ pipeline {
             }
         }
 
-        // stage ('Push') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('', registryCredential) {
-        //                 app.push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Push') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        app.push()
+                    }
+                }
+            }
+        }
     }
 }
