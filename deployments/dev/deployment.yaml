@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-example
+  labels:
+    app: jenkins-example
+    env: dev
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jenkins-example
+      env: dev
+    template:
+      metadata:
+        app: jenkins-example
+        env: dev
+      spec:
+        containers:
+          - name: jenkins-example
+            image: ""
+            ports:
+            - containerPort: 80
