@@ -2,8 +2,11 @@ pipeline {
     agent any
 
     environment {
-        registry = '$env.PROJECT/jenkins-fastapi'
+        email = 'mduong1995@gmail.com'
+
+        image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
+        registry = 'https://asia.gcr.io'
     }
 
     stages {
@@ -16,7 +19,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
-                    app = docker.build registry + ":$BUILD_NUMBER"
+                    app = docker.build image + ":$BUILD_NUMBER"
                 }
             }
         }
@@ -24,7 +27,7 @@ pipeline {
         stage ('Push') {
             steps {
                 script {
-                    docker.withRegistry(env.REGISTRY, registryCredential) {
+                    docker.withRegistry(registry, registryCredential) {
                         app.push()
                     }
                 }
@@ -36,7 +39,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                            sh "git config user.email ${env.GIT_EMAIL}"
+                            sh "git config user.email $email"
                             sh "git config user.name $GIT_USERNAME"
 
                             sh "sed -i 's/image:.*/image:hello-world/' dev/deployment.yaml"
