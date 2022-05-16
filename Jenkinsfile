@@ -35,6 +35,9 @@ pipeline {
         }
 
         stage ('Update manifest') {
+            environment {
+                manifest = 'deployments/dev/deployment.yaml'
+            }
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -42,9 +45,9 @@ pipeline {
                             sh "git config user.email $email"
                             sh "git config user.name $GIT_USERNAME"
 
-                            sh "sed -i 's/image:.*/image:hello-world/' dev/deployment.yaml"
-                            sh "cat dev/deployent.yaml"
-                            sh "git add dev/deployment.yaml"
+                            sh "sed -i 's/image:.*/image:hello-world/' $manifest"
+                            sh "cat $manifest"
+                            sh "git add $manifest"
                             sh "git commit -m 'Jenkins change manifest'"
                             sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-fastapi-cicd.git HEAD:main"
                         }
