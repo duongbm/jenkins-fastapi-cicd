@@ -49,7 +49,7 @@ pipeline {
                             sh "cat $manifest"
                             sh "git add $manifest"
                             sh "git commit -m 'Jenkins change manifest'"
-                            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-fastapi-cicd.git HEAD:main"
+                            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-fastapi-cicd.git HEAD:master"
                         }
                     }
                 }
