@@ -4,7 +4,7 @@ pipeline {
     environment {
         email = 'mduong1995@gmail.com'
 
-        image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
+        image = 'ce-cbl-dev-cloudapi\/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
         registry = 'https://asia.gcr.io'
     }
@@ -45,7 +45,7 @@ pipeline {
                             sh "git config user.email $email"
                             sh "git config user.name $GIT_USERNAME"
 
-                            sh "sed -i 's/image:.*/image:\"$image:$BUILD_NUMBER\"/ ' $manifest"
+                            sh "sed -i 's/image:.*/image:$image:$BUILD_NUMBER/' $manifest"
                             sh "cat $manifest"
                             sh "git add $manifest"
                             sh "git commit -m 'Jenkins change manifest'"
