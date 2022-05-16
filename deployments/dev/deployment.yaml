@@ -19,6 +19,6 @@ spec:
       spec:
         containers:
           - name: jenkins-example
-            image:ce-cbl-dev-cloudapi/jenkins-fastapi:386
+            image:ce-cbl-dev-cloudapi/jenkins-fastapi:387
             ports:
             - containerPort: 80
