@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = '${env.PROJECT}/jenkins-fastapi'
+        registry = '$env.PROJECT/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
     }
 
