@@ -45,7 +45,7 @@ pipeline {
                             sh "git config user.email $email"
                             sh "git config user.name $GIT_USERNAME"
 
-                            sh "sed -i 's/image:.*/image:hello-world/' $manifest"
+                            sh "sed -i 's/image:.*/image:$image:$BUILD_NUMBER/' $manifest"
                             sh "cat $manifest"
                             sh "git add $manifest"
                             sh "git commit -m 'Jenkins change manifest'"
