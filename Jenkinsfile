@@ -1,13 +1,13 @@
 pipeline {
     agent any
 
-    environment {
+    // environment {
         // email = 'mduong1995@gmail.com'
 
         // image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
         // registryCredential = 'gcr:ce-gcr'
         // registry = 'https://asia.gcr.io'
-    }
+    // }
 
     stages {
         stage('Show env') {
