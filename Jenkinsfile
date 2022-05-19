@@ -13,8 +13,7 @@ pipeline {
         stage('Show env') {
             steps {
                 checkout scm
-
-                sh "echo $env"
+                sh(returnStdout: true, script: "git log -1 --pretty=%B").trim()
             }
         }
 
