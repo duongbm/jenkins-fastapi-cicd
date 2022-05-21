@@ -45,7 +45,8 @@ spec:
     containers:
     - name: fastapi-example
       image: ${image}:$BUILD_NUMBER
-      port: 80
+      ports:
+      - containerPort: 8080
 _EOF_'''
                 }
             }
