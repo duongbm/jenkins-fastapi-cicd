@@ -46,7 +46,7 @@ containers:
 - name: fastapi-example
   image: ${image}:$BUILD_NUMBER
   port: 80
-                    '''
+_EOF_'''
                 }
             }
         }
