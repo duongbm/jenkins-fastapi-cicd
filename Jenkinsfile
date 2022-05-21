@@ -1,40 +1,55 @@
 pipeline {
     agent any
 
-    // environment {
-        // email = 'mduong1995@gmail.com'
-
-        // image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
-        // registryCredential = 'gcr:ce-gcr'
-        // registry = 'https://asia.gcr.io'
-    // }
+    environment {
+        image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
+        registryCredential = 'gcr:ce-gcr'
+        registry = 'https://asia.gcr.io'
+    }
 
     stages {
         stage('Show env') {
             steps {
                 checkout scm
-
-                sh "echo $env"
             }
         }
 
-        // stage ('Build') {
-        //     steps {
-        //         script {
-        //             app = docker.build image + ":$BUILD_NUMBER"
-        //         }
-        //     }
-        // }
+        stage ('Build') {
+            steps {
+                script {
+                    app = docker.build image + ":$BUILD_NUMBER"
+                }
+            }
+        }
 
-        // stage ('Push') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry(registry, registryCredential) {
-        //                 app.push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Push') {
+            steps {
+                script {
+                    docker.withRegistry(registry, registryCredential) {
+                        app.push()
+                    }
+                }
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                script {
+                    sh '''
+                        cat << _EOF_ | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+name: fastapi-example
+spec:
+containers:
+- name: fastapi-example
+  image: ${image}:$BUILD_NUMBER
+  port: 80
+                    '''
+                }
+            }
+        }
 
         // stage ('Update manifest') {
         //     environment {
