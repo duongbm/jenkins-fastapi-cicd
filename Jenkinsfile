@@ -40,12 +40,12 @@ pipeline {
 apiVersion: v1
 kind: Pod
 metadata:
-name: fastapi-example
+    name: fastapi-example
 spec:
-containers:
-- name: fastapi-example
-  image: ${image}:$BUILD_NUMBER
-  port: 80
+    containers:
+        - name: fastapi-example
+        image: ${image}:$BUILD_NUMBER
+        port: 80
 _EOF_'''
                 }
             }
