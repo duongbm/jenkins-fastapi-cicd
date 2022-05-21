@@ -44,8 +44,8 @@ metadata:
 spec:
     containers:
     - name: fastapi-example
-    image: ${image}:$BUILD_NUMBER
-    port: 80
+      image: ${image}:$BUILD_NUMBER
+      port: 80
 _EOF_'''
                 }
             }
