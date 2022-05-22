@@ -4,7 +4,7 @@ pipeline {
     environment {
         image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
-        registry = 'https://gcr.io'
+        registry = 'gcr.io'
     }
 
     stages {
@@ -17,7 +17,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
-                    app = docker.build image + ":$BUILD_NUMBER"
+                    app = docker.build(image)
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry(registry, registryCredential) {
-                        app.push()
+                        app.push("${env.BUILD_NUMBER}")
                     }
                 }
             }
@@ -44,7 +44,7 @@ metadata:
 spec:
     containers:
     - name: fastapi-example
-      image: ${image}:$BUILD_NUMBER
+      image: ${registry}/${image}:$BUILD_NUMBER
       ports:
       - containerPort: 8080
 _EOF_'''
