@@ -36,10 +36,10 @@ pipeline {
         stage ('Deploy') {
             steps {
                 script {
-                    // image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
-                    echo "${env.GIT_COMMIT}"
-                    echo "${env.image}"
-                    echo "${env.BUILD_NUMBER}"
+                    image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
+                    commit = env.GIT_COMMIT.substring(0, 8)
+                    echo "${}"
+                    echo "${image_name}"
 //                     sh '''
 //                         cat << _EOF_ | kubectl apply -f -
 // apiVersion: v1
