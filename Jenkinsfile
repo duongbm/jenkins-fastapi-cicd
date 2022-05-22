@@ -37,7 +37,9 @@ pipeline {
             steps {
                 script {
                     image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
-                    sh 'echo ${image_name}'
+                    sh 'echo ${env.GIT_COMMIT}'
+                    sh 'echo ${env.image}'
+                    sh 'echo ${env.BUILD_NUMBER}'
 //                     sh '''
 //                         cat << _EOF_ | kubectl apply -f -
 // apiVersion: v1
