@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         image = 'gcr.io/ce-cbl-dev-cloudapi/jenkins-fastapi'
-        tag = 'CE:${BUILD_NUMBER}'
         registryCredential = 'gcr:ce-gcr'
         registry = 'https://gcr.io'
     }
@@ -18,6 +17,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
+                    tag = 'CE:${BUILD_NUMBER}'
                     app = docker.build("${env.image}:${tag}")
                 }
             }
@@ -34,6 +34,7 @@ pipeline {
         }
 
         stage ('Deploy') {
+            tag = 'CE:${BUILD_NUMBER}'
             steps {
                 script {
                     sh '''
