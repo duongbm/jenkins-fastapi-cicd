@@ -17,7 +17,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
-                    app = docker.build(image)
+                    app = docker.build("${env.image}:${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry(registry, registryCredential) {
-                        app.push("${env.BUILD_NUMBER}")
+                        app.push()
                     }
                 }
             }
