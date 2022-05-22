@@ -18,6 +18,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
+                    sh 'echo $tag'
                     app = docker.build("${env.image}:${tag}")
                 }
             }
