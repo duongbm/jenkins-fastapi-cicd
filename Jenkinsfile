@@ -8,49 +8,48 @@ pipeline {
     }
 
     stages {
-        // stage('Show env') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
+        stage('Cloning repo') {
+            steps {
+                checkout scm
+            }
+        }
 
-        // stage ('Build') {
-        //     steps {
-        //         script {
-        //             tag = "CE-${env.BUILD_NUMBER}"
-        //             app = docker.build("${env.image}:${tag}")
-        //         }
-        //     }
-        // }
+        stage ('Build') {
+            steps {
+                script {
+                    tag = "CE-${env.BUILD_NUMBER}"
+                    app = docker.build("${env.image}:${tag}")
+                }
+            }
+        }
 
-        // stage ('Push') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry(registry, registryCredential) {
-        //                 app.push()
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('Push') {
+            steps {
+                script {
+                    docker.withRegistry(registry, registryCredential) {
+                        app.push()
+                    }
+                }
+            }
+        }
 
         stage ('Deploy') {
             steps {
                 script {
                     image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
-                    sh "echo ${image_name}"
-//                     sh '''
-//                         cat << _EOF_ | kubectl apply -f -
-// apiVersion: v1
-// kind: Pod
-// metadata:
-//     name: fastapi-example
-// spec:
-//     containers:
-//     - name: fastapi-example
-//       image: \${image_name}
-//       ports:
-//       - containerPort: 8080
-// _EOF_'''
+                    sh """
+                        cat << _EOF_ | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+    name: fastapi-example
+spec:
+    containers:
+    - name: fastapi-example
+      image: ${image_name}
+      ports:
+      - containerPort: 8080
+_EOF_"""
                 }
             }
         }
