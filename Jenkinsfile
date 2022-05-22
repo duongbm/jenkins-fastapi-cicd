@@ -34,9 +34,9 @@ pipeline {
         }
 
         stage ('Deploy') {
-            tag = 'CE:${BUILD_NUMBER}'
             steps {
                 script {
+                    tag = 'CE:${BUILD_NUMBER}'
                     sh '''
                         cat << _EOF_ | kubectl apply -f -
 apiVersion: v1
