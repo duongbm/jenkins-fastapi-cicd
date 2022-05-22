@@ -36,7 +36,7 @@ pipeline {
         stage ('Deploy') {
             steps {
                 script {
-                    tag = "CE-${env.BUILD_NUMBER}"
+                    image_name = "${image}:CE-${env.BUILD_NUMBER}"
                     sh '''
                         cat << _EOF_ | kubectl apply -f -
 apiVersion: v1
@@ -46,7 +46,7 @@ metadata:
 spec:
     containers:
     - name: fastapi-example
-      image: $image:$tag
+      image: $image_name
       ports:
       - containerPort: 8080
 _EOF_'''
