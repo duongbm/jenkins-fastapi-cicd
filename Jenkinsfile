@@ -38,7 +38,7 @@ pipeline {
                 script {
                     image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
                     commit = env.GIT_COMMIT.substring(0, 8)
-                    echo "${}"
+                    echo "${commit}"
                     echo "${image_name}"
 //                     sh '''
 //                         cat << _EOF_ | kubectl apply -f -
