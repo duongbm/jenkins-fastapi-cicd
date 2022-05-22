@@ -46,7 +46,7 @@ metadata:
 spec:
     containers:
     - name: fastapi-example
-      image: "${image_name}"
+      image: \${image_name}
       ports:
       - containerPort: 8080
 _EOF_'''
