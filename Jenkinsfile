@@ -36,7 +36,7 @@ pipeline {
         stage ('Deploy') {
             steps {
                 script {
-                    image_name = "${image}:CE-${env.BUILD_NUMBER}"
+                    image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
                     sh '''
                         cat << _EOF_ | kubectl apply -f -
 apiVersion: v1
