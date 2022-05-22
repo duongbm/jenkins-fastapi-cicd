@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        image = 'ce-cbl-dev-cloudapi/jenkins-fastapi'
+        image = 'gcr.io/ce-cbl-dev-cloudapi/jenkins-fastapi'
         registryCredential = 'gcr:ce-gcr'
-        registry = 'gcr.io'
+        registry = 'https://gcr.io'
     }
 
     stages {
@@ -44,7 +44,7 @@ metadata:
 spec:
     containers:
     - name: fastapi-example
-      image: ${registry}/${image}:$BUILD_NUMBER
+      image: ${image}:$BUILD_NUMBER
       ports:
       - containerPort: 8080
 _EOF_'''
