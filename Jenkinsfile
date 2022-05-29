@@ -21,7 +21,8 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
-                    echo "tag ${env.tag}"
+                    echo "tag1 ${env.GIT_COMMIT.substring(0,7)}"
+                    echo "tag2 ${env.tag}"
                     app = docker.build("${env.image}:${env.tag}")
                 }
             }
