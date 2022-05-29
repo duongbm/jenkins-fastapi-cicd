@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("showing") {
             steps {
-                echo dev;
+                echo "${dev}";
             }
         }
     }
