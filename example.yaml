@@ -1,0 +1,33 @@
+- hosts: localhost
+  tasks:
+    - name: Deployment sample
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: deployment-sample
+            labels:
+              app: sample
+          spec:
+            replicas: 3
+            selector:
+              matchLabels:
+                app: sample
+            template:
+              metadata:
+                labels:
+                  app: sample
+              spec:
+                containers:
+                - name: sample
+                  image: {{ image }}
+                  ports:
+                  - containerPort: 8080
+
+
+            
+
+
+     

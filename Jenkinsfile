@@ -10,57 +10,39 @@ pipeline {
         }
     }
 
-//     environment {
-//         image = 'gcr.io/ce-cbl-dev-cloudapi/jenkins-fastapi'
-//         registryCredential = 'gcr:ce-gcr'
-//         registry = 'https://gcr.io'
-//     }
 
-//     stages {
-//         stage('Cloning repo') {
-//             steps {
-//                 checkout scm
-//             }
-//         }
+    stages {
+        stage('Cloning repo') {
+            steps {
+                checkout scm
+            }
+        }
 
-//         stage ('Build') {
-//             steps {
-//                 script {
-//                     tag = "CE-${env.BUILD_NUMBER}"
-//                     app = docker.build("${env.image}:${tag}")
-//                 }
-//             }
-//         }
+        stage ('Build') {
+            steps {
+                script {
+                    app = docker.build("${env.image}:${env.tag}")
+                }
+            }
+        }
 
-//         stage ('Push') {
-//             steps {
-//                 script {
-//                     docker.withRegistry(registry, registryCredential) {
-//                         app.push()
-//                     }
-//                 }
-//             }
-//         }
+        stage ('Push') {
+            steps {
+                script {
+                    docker.withRegistry("${env.registry}", "${env.credential}") {
+                        app.push()
+                    }
+                }
+            }
+        }
 
-//         stage ('Deploy') {
-//             steps {
-//                 script {
-//                     image_name = "${env.image}:CE-${env.BUILD_NUMBER}"
-//                     sh """
-//                         cat << _EOF_ | kubectl apply -f -
-// apiVersion: v1
-// kind: Pod
-// metadata:
-//     name: fastapi-example
-// spec:
-//     containers:
-//     - name: fastapi-example
-//       image: ${image_name}
-//       ports:
-//       - containerPort: 8080
-// _EOF_"""
-//                 }
-//             }
-//         }
-//     }
+        stage ('Deploy') {
+            steps {
+                script {
+                    def image_id =  "${env.image}:${env.tag}"
+                    sh "ansible-playbook  example.yml --extra-vars \"image=${image_id}\""
+                }
+            }
+        }
+    }
 }
