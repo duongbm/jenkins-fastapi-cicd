@@ -1,17 +1,18 @@
 pipeline {
     agent any
 
+
+
     stages {
+
         stage("showing") {
             steps {
-                echo "${dev}";
-                echo "${env.GIT_COMMIT.substring(0,7)}"
+                echo "${env.image}";
+                echo "${env.credential}"
+                echo "${env.tag}"
             }
         }
-    }
 
-
-    stages {
         stage('Cloning repo') {
             steps {
                 checkout scm
