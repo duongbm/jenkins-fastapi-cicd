@@ -5,6 +5,7 @@ pipeline {
         stage("showing") {
             steps {
                 echo "${dev}";
+                echo "${env.GIT_COMMIT.substring(0,7)}"
             }
         }
     }
