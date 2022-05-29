@@ -9,7 +9,6 @@ pipeline {
             steps {
                 echo "${env.image}";
                 echo "${env.credential}"
-                echo "${env.tag}"
             }
         }
 
@@ -22,6 +21,7 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
+                    echo "tag ${env.tag}"
                     app = docker.build("${env.image}:${env.tag}")
                 }
             }
