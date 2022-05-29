@@ -22,7 +22,7 @@
               spec:
                 containers:
                 - name: sample
-                  image: {{ image }}
+                  image: "{{ image }}"
                   ports:
                   - containerPort: 8080
 
