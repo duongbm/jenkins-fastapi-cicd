@@ -21,9 +21,8 @@ pipeline {
         stage ('Build') {
             steps {
                 script {
-                    echo "tag1 ${env.GIT_COMMIT.substring(0,7)}"
-                    echo "tag2 ${env.tag}"
-                    app = docker.build("${env.image}:${env.tag}")
+                    def tag = "${env.key}-${env.GIT_COMMIT.substring(0,7)}"
+                    app = docker.build("${env.image}:${tag}")
                 }
             }
         }
@@ -41,7 +40,8 @@ pipeline {
         stage ('Deploy') {
             steps {
                 script {
-                    def image_id =  "${env.image}:${env.tag}"
+                    def tag = "${env.key}-${env.GIT_COMMIT.substring(0,7)}"
+                    def image_id =  "${env.image}:${tag}"
                     sh "ansible-playbook  example.yml --extra-vars \"image=${image_id}\""
                 }
             }
