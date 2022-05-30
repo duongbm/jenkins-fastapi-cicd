@@ -8,6 +8,7 @@
           kind: Deployment
           metadata:
             name: deployment-sample
+            namespace: default
             labels:
               app: sample
           spec:
